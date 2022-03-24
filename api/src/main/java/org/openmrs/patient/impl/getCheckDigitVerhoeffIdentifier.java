@@ -3,15 +3,17 @@
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
  * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+<<<<<<< HEAD
  *
+=======
+ * <p>
+>>>>>>> f9d932e4909fa11309f41a01e6b13db222bb0669
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
 package org.openmrs.patient.impl;
 
 public class getCheckDigitVerhoeffIdentifier {
-	
-	private int[][] F = new int[8][];
 	
 	private static final int[][] op = { { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }, { 1, 2, 3, 4, 0, 6, 7, 8, 9, 5 },
 	        { 2, 3, 4, 0, 1, 7, 8, 9, 5, 6 }, { 3, 4, 0, 1, 2, 8, 9, 5, 6, 7 }, { 4, 0, 1, 2, 3, 9, 5, 6, 7, 8 },
@@ -20,10 +22,12 @@ public class getCheckDigitVerhoeffIdentifier {
 	
 	private static final int[] inv = { 0, 4, 3, 2, 1, 5, 6, 7, 8, 9 };
 	
+	private int[][] checkArray = new int[8][];
+	
 	protected int getCheckDigit(String undecoratedIdentifier) {
-		int[] a = getBase(Integer.parseInt(undecoratedIdentifier), undecoratedIdentifier.length());
-		insertCheck(a);
-		return a[0];
+		int[] getBaseArray = getBase(Integer.parseInt(undecoratedIdentifier), undecoratedIdentifier.length());
+		insertCheck(getBaseArray);
+		return getBaseArray[0];
 	}
 	
 	private int[] getBase(int num, int length) {
@@ -40,7 +44,7 @@ public class getCheckDigitVerhoeffIdentifier {
 	private int insertCheck(int[] a) {
 		int check = 0;
 		for (int i = 1; i < a.length; i++) {
-			check = op[check][F[i % 8][a[i]]];
+			check = op[check][checkArray[i % 8][a[i]]];
 		}
 		a[0] = inv[check];
 		return a[0];
